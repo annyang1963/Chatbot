@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #chat {
+            width: 100%;
+            height: 400px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+        }
+
+        .input-container {
+            display: flex;
+        }
+
+        #input {
+            flex-grow: 1;
+        }
+
+        button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chat"></div>
+    <div class="input-container">
+        <input id="input" type="text" placeholder="Type your question here...">
+        <button id="ask">Ask</button>
+    </div>
+    <script>
+        let conversation = [];
+        const inputField = document.getElementById("input");
+        const askButton = document.getElementById("ask");
+        const chatDiv = document.getElementById("chat");
+
+        askButton.addEventListener("click", () => {
+            submitInput();
+        });
+
+        inputField.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                submitInput();
+            }
+        });
+
+        function submitInput() {
+            const question = inputField.value.trim();
+            inputField.value = "";
+
+            if (!question) {
+                return;
+            }
+
+            conversation.push({ type: "user", text: question });
+
+            chatDiv.innerHTML += `<p><strong>You:</strong> ${question}</p>`;
+
+            fetch("/process", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    conversation_history: conversation.map(message => message.text),
+                    question
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const answer = data.answer;
+                    conversation.push({ type: "gpt", text: answer });
+
+                    chatDiv.innerHTML += `<p><strong>ChatGPT:</strong> ${answer}</p>`;
+                    chatDiv.scrollTop = chatDiv.scrollHeight;
+                });
+        }
+
+        function updateChatHistory(conversation) {
+            const chatDiv = document.getElementById("chat");
+            chatDiv.innerHTML = "";
+
+            conversation.forEach(message => {
+                const sender = message.type === "user" ? "You" : "ChatGPT";
+                chatDiv.innerHTML += `<p><strong>${sender}:</strong> ${message.text}</p>`;
+            });
+
+            chatDiv.scrollTop = chatDiv.scrollHeight;
+        }
+
+
+    </script>
+</body>
+
+</html>
