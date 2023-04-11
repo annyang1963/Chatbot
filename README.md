@@ -26,7 +26,7 @@ If everything is set up correctly, you should see the following message
 Then go to a web browser and nevigate to http://127.0.0.1:8000. You should be able to type in questions, press enter and get responses.
 The chat history is displayed on the browser and it will be erased if you refresh the webpage.
 
-### app.py
+## app.py
 You can change the settings in `app.py` to fit your need.
 The model used in the current file is `gpt-3.5-turbo`, `max_tokens` is set to `200` and `temperature` is set to `0.7`.
 
