@@ -24,6 +24,9 @@ If everything is set up correctly, you should see the following message
  * Running on http://127.0.0.1:8000
 ```
 Then go to a web browser and nevigate to http://127.0.0.1:8000. You should be able to type in questions, press enter and get responses.
+
+![ScreenShot](https://github.com/annyang1963/Chatbot/blob/main/Screen%20Shot%202023-04-10%20at%209.05.29%20PM.png)
+
 The chat history is displayed on the browser and it will be erased if you refresh the webpage.
 
 ## app.py
