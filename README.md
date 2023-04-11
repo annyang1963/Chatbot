@@ -1,5 +1,5 @@
 # Chatbot
-To use the chatbot, you need to have python 3.11 installed.
+To use the chatbot, you need to have [python 3.11](https://www.python.org/downloads/) installed.
 
 First clone or download the repo to your local machine and cd into the folder.
 
